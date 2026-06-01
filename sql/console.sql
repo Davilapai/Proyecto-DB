@@ -229,24 +229,37 @@ begin
 end;
 /
 
+create or replace trigger trg_precio_base_inscripcion
+    before insert on inscripcion
+    for each row
+declare
+    v_precio_base number(8, 2);
+begin
+    select precio_base into v_precio_base
+    from experiencia
+    where id = :new.id_experiencia;
+
+    :new.precio_total    := v_precio_base;
+    :new.saldo_pendiente := v_precio_base;
+end;
+/
+
 create or replace trigger trg_saldo_pendiente
 after insert on pago
 for each row
 declare
     v_saldo number(8, 2);
 begin
-    if inserting then
-        select saldo_pendiente
-        into v_saldo
-        from inscripcion
-        where id = :new.id_inscripcion;
+    select saldo_pendiente
+    into v_saldo
+    from inscripcion
+    where id = :new.id_inscripcion;
 
-        v_saldo := v_saldo - :new.valor_pagado;
+    v_saldo := v_saldo - :new.valor_pagado;
 
-        update inscripcion
-        set saldo_pendiente = v_saldo
-        where id = :new.id_inscripcion;
-    end if;
+    update inscripcion
+    set saldo_pendiente = v_saldo
+    where id = :new.id_inscripcion;
 end;
 /
 
