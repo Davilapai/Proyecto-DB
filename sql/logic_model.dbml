@@ -1,0 +1,153 @@
+Table pais {
+  id number(3) [pk, increment]
+  nombre varchar2(100)
+}
+
+Table ciudad {
+  id number(3) [pk, increment]
+  nombre varchar2(100)
+  id_pais number(3)
+}
+Ref: ciudad.id_pais > pais.id
+
+Table estadio {
+  id number(3) [pk, increment]
+  nombre varchar2(100)
+  capacidad number(6)
+  id_ciudad number(3)
+}
+Ref: estadio.id_ciudad > ciudad.id
+
+Table confederacion {
+  id number(3) [pk, increment]
+  nombre varchar2(100)
+}
+
+Table seleccion {
+  id number(3) [pk, increment]
+  nombre varchar2(100)
+  id_confederacion number(3)
+}
+Ref: seleccion.id_confederacion > confederacion.id
+
+Table partido {
+  id number(3) [pk, increment]
+  id_estadio number(3)
+  fecha timestamp
+  id_seleccion_local number(3)
+  id_seleccion_visitante number(3)
+  goles_local number(2)
+  goles_visitante number(2)
+}
+Ref: partido.id_estadio > estadio.id
+Ref: partido.id_seleccion_local > seleccion.id
+Ref: partido.id_seleccion_visitante > seleccion.id
+
+Table guia {
+  id number(3) [pk, increment]
+  tipo_documento char(2)
+  numero_documento number(12) [not null]
+  nombre varchar2(100) [not null]
+  nivel varchar2(100)
+  
+  indexes {
+    (tipo_documento, numero_documento) [unique]
+  }
+}
+
+Table experiencia {
+  id number(3) [pk, increment]
+  id_partido number(3)
+  id_guia_principal number(3)
+  descripcion varchar2(100)
+  estado varchar2(20)
+  precio_base "number(8, 2)"
+  cupos_totales number(6)
+  cupos_disponibles number(6)
+}
+Ref: experiencia.id_partido > partido.id
+Ref: experiencia.id_guia_principal > guia.id
+
+Table servicio {
+  id number(3) [pk, increment]
+  nombre varchar2(100) [not null]
+  descripcion varchar2(100)
+  costo "number(8, 2)"
+}
+
+Table experiencia_servicio {
+  id number(3) [pk, increment]
+  id_experiencia number(3)
+  id_servicio number(3)
+}
+Ref: experiencia_servicio.id_servicio > servicio.id
+Ref: experiencia_servicio.id_experiencia > experiencia.id
+
+Table experiencia_guia_suplente {
+  id_experiencia number(3) [pk]
+  id_guia number(3) [pk]
+}
+Ref: experiencia_guia_suplente.id_guia > guia.id
+Ref: experiencia_guia_suplente.id_experiencia > experiencia.id
+
+Table cliente {
+  id number(3) [pk, increment]
+  tipo_documento char(2)
+  numero_documento number(12) [not null]
+  nombre_completo varchar2(100) [not null]
+  correo varchar2(100)
+  telefono varchar2(20)
+}
+
+Table inscripcion {
+  id number(6) [pk, increment]
+  id_cliente number(3) [not null]
+  id_experiencia number(3) [not null]
+  precio_total "number(8, 2)"
+  saldo_pendiente "number(8, 2)"
+  fecha timestamp
+}
+Ref: inscripcion.id_cliente > cliente.id
+Ref: inscripcion.id_experiencia > experiencia.id
+
+Table historial_cliente {
+  id number(3) [pk, increment]
+  id_cliente number(3) [not null]
+  id_inscripcion number(6)
+  descripcion varchar2(500) [not null]
+  fecha timestamp [default: `current_timestamp`]
+}
+Ref: historial_cliente.id_cliente > cliente.id
+Ref: historial_cliente.id_inscripcion > inscripcion.id
+
+Table inscripcion_servicio {
+  id_inscripcion number(6) [pk]
+  id_exp_servicio number(3) [pk]
+  cantidad number(2)
+  costo_unitario "number(8, 2)"
+}
+Ref: inscripcion_servicio.id_exp_servicio > experiencia_servicio.id
+Ref: inscripcion_servicio.id_inscripcion > inscripcion.id
+
+Table impuesto {
+  id number(3) [pk, increment]
+  tipo_impuesto varchar2(50)
+  porcentaje "number(5, 2)"
+}
+
+Table servicio_impuesto {
+  id_servicio number(3) [pk]
+  id_impuesto number(3) [pk]
+}
+Ref: servicio_impuesto.id_impuesto > impuesto.id
+Ref: servicio_impuesto.id_servicio > servicio.id
+
+Table pago {
+  id number(3) [pk, increment]
+  id_inscripcion number(6) [not null]
+  metodo varchar2(100)
+  referencia varchar2(100)
+  valor_pagado "number(8, 2)"
+  fecha timestamp
+}
+Ref: pago.id_inscripcion > inscripcion.id
