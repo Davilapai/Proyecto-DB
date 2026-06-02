@@ -1,7 +1,8 @@
 package config;
 import io.github.cdimascio.dotenv.Dotenv;
 
-public class Constantes {
+public class Constantes 
+{
     private static final Dotenv dotenv = Dotenv.load();
 
     public static final String USERNAME = dotenv.get("DB_USER");
