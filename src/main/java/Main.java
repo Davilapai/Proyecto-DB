@@ -24,6 +24,7 @@ public class Main {
         System.out.println("Elige el modo de ingreso para el cliente");
         System.out.println("\t 1. Ingresar con número de documento");
         System.out.println("\t 2. Ingresar con codigo de reserva");
+        System.out.println("\t 3. Salir");
         System.out.print("Su opcion: ");
         int opcion = 0;
 
@@ -32,7 +33,7 @@ public class Main {
             try
             {
                 opcion = sc.nextInt();
-                if(opcion != 1 && opcion != 2)
+                if(opcion != 1 && opcion != 2 && opcion != 3)
                 {
                     throw new IllegalArgumentException("Opcion no valida");
                 }
@@ -45,7 +46,11 @@ public class Main {
                 sc.nextLine(); 
             }  
         }
-
+        if (opcion == 3) 
+        {
+            System.out.println("Saliendo del programa. ¡Hasta luego!");
+            return;
+        }
         int lim = (opcion == 1) ? 10 : 6;
         String acceso = (opcion == 1) ? "documento de identidad" : "codigo de reserva";
   

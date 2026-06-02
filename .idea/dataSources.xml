@@ -9,5 +9,13 @@
       <jdbc-url>jdbc:oracle:thin:@//100.71.184.93:1521/XEPDB1</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="universidad" uuid="98058cd6-dbaf-4659-942d-8a0a2ec8dc83">
+      <driver-ref>oracle.19</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//orion.javeriana.edu.co:1521/LAB</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
