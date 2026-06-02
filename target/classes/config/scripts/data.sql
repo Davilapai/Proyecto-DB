@@ -523,10 +523,7 @@ VALUES ('CC', 1111111111, 'Carlos Gomez', 'carlos@mail.com', '3001111111')
 INSERT INTO cliente (tipo_documento, numero_documento, nombre_completo, correo, telefono)
 VALUES ('CE', 2222222222, 'Ana Torres', 'ana@mail.com', '3002222222')
 /
--- Mariana Lopez: numero de documento de 10 digitos para acceso por UI
-INSERT INTO cliente (tipo_documento, numero_documento, nombre_completo, correo, telefono)
-VALUES ('CC', 1234567890, 'Mariana Lopez', 'mariana@mail.com', '3001234567')
-/
+
 
 -- Inscripciones (el trigger trg_act_cupos_disp inicializa precio_total con precio_base
 --               y el trigger trg_historial_nueva_inscripcion agrega entrada al historial)
@@ -536,9 +533,7 @@ INSERT INTO inscripcion (id_cliente, id_experiencia, fecha) VALUES (1, 3, CURREN
 /
 INSERT INTO inscripcion (id_cliente, id_experiencia, fecha) VALUES (2, 1, CURRENT_TIMESTAMP)
 /
--- Inscripcion de Mariana Lopez a VIP Mexico-Japon (inscripcion id=4)
-INSERT INTO inscripcion (id_cliente, id_experiencia, fecha) VALUES (3, 4, CURRENT_TIMESTAMP)
-/
+
 
 -- Servicios de la inscripcion 1 (el trigger trg_calcular_precio_total actualiza el total)
 INSERT INTO inscripcion_servicio (id_inscripcion, id_exp_servicio, cantidad, costo_unitario) VALUES (1, 1, 1, 50.00)
@@ -548,15 +543,7 @@ INSERT INTO inscripcion_servicio (id_inscripcion, id_exp_servicio, cantidad, cos
 -- Servicios de la inscripcion 3
 INSERT INTO inscripcion_servicio (id_inscripcion, id_exp_servicio, cantidad, costo_unitario) VALUES (3, 1, 1, 50.00)
 /
--- Servicios de Mariana: Transporte Aeropuerto(3), Alimentacion Normal(4), Traduccion(6), Kit Souvenirs(7)
-INSERT INTO inscripcion_servicio (id_inscripcion, id_exp_servicio, cantidad, costo_unitario) VALUES (4, 3, 1, 75.00)
-/
-INSERT INTO inscripcion_servicio (id_inscripcion, id_exp_servicio, cantidad, costo_unitario) VALUES (4, 4, 1, 25.00)
-/
-INSERT INTO inscripcion_servicio (id_inscripcion, id_exp_servicio, cantidad, costo_unitario) VALUES (4, 6, 1, 45.00)
-/
-INSERT INTO inscripcion_servicio (id_inscripcion, id_exp_servicio, cantidad, costo_unitario) VALUES (4, 7, 1, 50.00)
-/
+
 
 -- Pagos (el trigger trg_saldo_pendiente descuenta del saldo_pendiente)
 INSERT INTO pago (id_inscripcion, metodo, referencia, valor_pagado, fecha) VALUES (1, 'TARJETA CREDITO', 'REF123', 500.00, CURRENT_TIMESTAMP)
@@ -565,8 +552,7 @@ INSERT INTO pago (id_inscripcion, metodo, referencia, valor_pagado, fecha) VALUE
 /
 INSERT INTO pago (id_inscripcion, metodo, referencia, valor_pagado, fecha) VALUES (3, 'TARJETA DEBITO', 'REF125', 100.00, CURRENT_TIMESTAMP)
 /
-INSERT INTO pago (id_inscripcion, metodo, referencia, valor_pagado, fecha) VALUES (4, 'TARJETA CREDITO', 'REF-MARIANA', 300.00, CURRENT_TIMESTAMP)
-/
+
 
 commit
 /
