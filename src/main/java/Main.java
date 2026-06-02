@@ -103,10 +103,19 @@ public class Main {
                 System.out.println("Regresando al menu de inicio...");
             }
         }
-        else 
+        else
         {
             System.out.println("Ingreso exitoso. ¡Bienvenido!");
-            // Continuar al flujo del cliente existente...
+            if (opcion == 1)
+            {
+                // HU1: cliente existente — ver historial y opcion de nueva inscripcion
+                ClienteDAO.MenuCliente(conn, sc, verificarS);
+            }
+            else
+            {
+                // HU2: gestion por codigo de reserva
+                ClienteDAO.MenuReserva(conn, sc, verificarS);
+            }
         }
     }
 }
